@@ -2,8 +2,7 @@ package com.uniritter.agwt.eventos;
 
 import com.uniritter.agwt.eventos.domain.Evento;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.Test;
 
 import java.util.Date;
 

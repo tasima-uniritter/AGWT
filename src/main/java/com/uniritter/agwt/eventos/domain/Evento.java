@@ -29,4 +29,12 @@ public class Evento {
     public void setDataDoEvento(Date dataDoEvento) {
         this.dataDoEvento = dataDoEvento;
     }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "nome='" + nome + '\'' +
+                ", dataDoEvento=" + dataDoEvento +
+                '}';
+    }
 }
