@@ -8,6 +8,9 @@ target/
 .project
 .settings
 .springBeans
+agwt.log
+agwt.properties
+agwt.script
 
 ### IntelliJ IDEA ###
 .idea

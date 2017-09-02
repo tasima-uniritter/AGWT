@@ -27,6 +27,10 @@ public class Evento {
         setDataDoEvento(dataDoEvento);
     }
 
+    public Evento(){
+
+    }
+
     public long getId() {
         return Id;
     }
