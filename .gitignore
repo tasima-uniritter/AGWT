@@ -11,6 +11,7 @@ target/
 agwt.log
 agwt.properties
 agwt.script
+agwt.lck
 
 ### IntelliJ IDEA ###
 .idea
