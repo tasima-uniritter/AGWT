@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EventoResource {
 
 
     @RequestMapping("/incluir")
-    public Evento incluirEvento(@RequestParam String nome, @RequestParam Date data) throws URISyntaxException {
+    public Evento incluirEvento(@RequestParam String nome, @RequestParam LocalDate data) throws URISyntaxException {
         System.out.println(nome);
         System.out.println(data);
         Evento evento = new Evento(nome, data);

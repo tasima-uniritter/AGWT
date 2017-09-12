@@ -1,9 +1,12 @@
 package com.uniritter.agwt.eventos;
 
-import com.uniritter.agwt.eventos.domain.Evento;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.uniritter.agwt.eventos.domain.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,15 +15,99 @@ import java.util.Date;
 
 public class EventoTest {
 
-    @Test
-    public void criaEventoTest(){
+    private Evento evento;
+    private ValidadorEvento validadorEvento;
+    private boolean ocorreuErro;
 
-        Evento evento = new Evento("Evento Teste", new Date(2017,10,31));
-
-        System.out.print(evento.toString());
-        Assert.assertTrue("Sucesso", evento.getNome().equals("Evento Teste") );
+    @Before
+    public void iniciar() {
+        validadorEvento = new ValidadorEvento();
     }
 
+    @Test
+    public void criaEventoComNome(){
+        evento = new Evento("teste evento", LocalDate.now().plusDays(10));
+        Assert.assertEquals(evento.getNome(), "teste evento");
+    }
+
+    @Test
+    public void criaEventoComData(){
+        evento = new Evento("teste evento", LocalDate.now().plusDays(10));
+        Assert.assertEquals(evento.getDataDoEvento(), LocalDate.now().plusDays(10));
+    }
+
+
+    @Test
+    public void criaEventoValidaCampoNomeObrigatorios() throws DataDoEventoNaoInformadoException {
+        evento = new Evento("", null);
+        ocorreuErro = false;
+
+        try {
+            validadorEvento.CamposObrigatorios(evento);
+        } catch (NomeDoEventoNaoInformadoException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue(ocorreuErro);
+    }
+
+    @Test
+    public void criaEventoValidaCampoDataObrigatorios() throws NomeDoEventoNaoInformadoException {
+        evento = new Evento("Teste", null);
+        ocorreuErro = false;
+
+        try {
+            validadorEvento.CamposObrigatorios(evento);
+        } catch (DataDoEventoNaoInformadoException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue(ocorreuErro);
+    }
+
+    @Test
+    public void criaEventoCampoNomeMaiorQue150Caracteres(){
+        evento = new Evento("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" +
+                "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+                LocalDate.now().plusDays(1));
+
+        ocorreuErro = false;
+
+        try {
+            validadorEvento.ValidaTamanhoCampoNome(evento);
+        } catch (NomePermiteMax150CaracteresException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue(ocorreuErro);
+    }
+
+    @Test
+    public void criaEventoCampoDataIgualAHoje(){
+        evento = new Evento("Teste", LocalDate.now());
+        ocorreuErro = false;
+
+        try {
+            validadorEvento.ValidaCampoDataMenorIgualHoje(evento);
+        } catch (DataMenorOuIgualAHojeException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue(ocorreuErro);
+    }
+
+    @Test
+    public void criaEventoCampoDataMenorQueHoje(){
+        evento = new Evento("Teste", LocalDate.now().plusDays(-1));
+
+        try {
+            validadorEvento.ValidaCampoDataMenorIgualHoje(evento);
+        } catch (DataMenorOuIgualAHojeException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue(ocorreuErro);
+    }
 }
 
 

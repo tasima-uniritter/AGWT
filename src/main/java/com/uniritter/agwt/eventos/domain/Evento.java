@@ -3,6 +3,7 @@ package com.uniritter.agwt.eventos.domain;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -20,9 +21,9 @@ public class Evento {
     private String nome;
 
     @Column(nullable = false)
-    private Date dataDoEvento;
+    private LocalDate dataDoEvento;
 
-    public Evento(String nome, Date dataDoEvento){
+    public Evento(String nome, LocalDate dataDoEvento){
         setNome(nome);
         setDataDoEvento(dataDoEvento);
     }
@@ -47,11 +48,11 @@ public class Evento {
         this.nome = nome;
     }
 
-    public Date getDataDoEvento() {
+    public LocalDate getDataDoEvento() {
         return dataDoEvento;
     }
 
-    public void setDataDoEvento(Date dataDoEvento) {
+    public void setDataDoEvento(LocalDate dataDoEvento) {
         this.dataDoEvento = dataDoEvento;
     }
 
