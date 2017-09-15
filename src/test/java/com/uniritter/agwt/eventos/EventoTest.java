@@ -25,20 +25,20 @@ public class EventoTest {
     }
 
     @Test
-    public void criaEventoComNome(){
+    public void criaEventoComNomeTest(){
         evento = new Evento("teste evento", LocalDate.now().plusDays(10));
         Assert.assertEquals(evento.getNome(), "teste evento");
     }
 
     @Test
-    public void criaEventoComData(){
+    public void criaEventoComDataTest(){
         evento = new Evento("teste evento", LocalDate.now().plusDays(10));
         Assert.assertEquals(evento.getDataDoEvento(), LocalDate.now().plusDays(10));
     }
 
 
     @Test
-    public void criaEventoValidaCampoNomeObrigatorios() throws DataDoEventoNaoInformadoException {
+    public void criaEventoValidaCampoNomeObrigatoriosTest() throws DataDoEventoNaoInformadoException {
         evento = new Evento("", null);
         ocorreuErro = false;
 
@@ -52,7 +52,7 @@ public class EventoTest {
     }
 
     @Test
-    public void criaEventoValidaCampoDataObrigatorios() throws NomeDoEventoNaoInformadoException {
+    public void criaEventoValidaCampoDataObrigatoriosTest() throws NomeDoEventoNaoInformadoException {
         evento = new Evento("Teste", null);
         ocorreuErro = false;
 
@@ -66,7 +66,7 @@ public class EventoTest {
     }
 
     @Test
-    public void criaEventoCampoNomeMaiorQue150Caracteres(){
+    public void criaEventoCampoNomeMaiorQue150CaracteresTest(){
         evento = new Evento("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" +
                 "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
                 LocalDate.now().plusDays(1));
@@ -83,7 +83,7 @@ public class EventoTest {
     }
 
     @Test
-    public void criaEventoCampoDataIgualAHoje(){
+    public void criaEventoCampoDataIgualAHojeTest(){
         evento = new Evento("Teste", LocalDate.now());
         ocorreuErro = false;
 
@@ -97,7 +97,7 @@ public class EventoTest {
     }
 
     @Test
-    public void criaEventoCampoDataMenorQueHoje(){
+    public void criaEventoCampoDataMenorQueHojeTest() {
         evento = new Evento("Teste", LocalDate.now().plusDays(-1));
 
         try {

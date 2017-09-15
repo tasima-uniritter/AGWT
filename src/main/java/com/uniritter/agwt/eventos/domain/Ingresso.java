@@ -26,6 +26,28 @@ public class Ingresso {
     @Column
     private LocalDate finalVendas;
 
+    public Ingresso(IngressoTipo tipo) {
+        this.tipo = tipo;
+        atribuiValorDosIngressos();
+    }
+
+    private void atribuiValorDosIngressos(){
+        switch (tipo){
+            case VIP:
+                setValor(Double.valueOf(1000));
+                break;
+            case BACKSTAGE:
+                setValor(Double.valueOf(800));
+                break;
+            case PLATEIA_VIP:
+                setValor(Double.valueOf(500));
+                break;
+            case PLATEIA:
+                setValor(valor = Double.valueOf(300));
+                break;
+        }
+    }
+
     public long getCodigo() {
         return codigo;
     }
@@ -50,11 +72,9 @@ public class Ingresso {
         this.evento = evento;
     }
 
-    public Double getValor() {
-        return valor;
-    }
+    public Double getValor() { return valor; }
 
-    public void setValor(Double valor) {
+    private void setValor(Double valor) {
         this.valor = valor;
     }
 
