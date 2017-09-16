@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/evento")
@@ -22,17 +23,23 @@ public class EventoController {
     @RequestMapping(value="/cadastro")
     String cadastra() {
 
-        return "cadastro";
+        return "/evento/cadastro";
     }
 
     @RequestMapping(value="/cadastro/salva", method= RequestMethod.POST)
-    String salva(@RequestParam String nome, @RequestParam LocalDate data, Model model) {
+    String salva(@RequestParam String nome, @RequestParam String data, Model model) {
 
         System.out.println(nome);
         System.out.println(data);
-        Evento evento = new Evento(nome, data);
 
         try {
+            String[] parts = data.split("-");
+            Integer ano = Integer.valueOf(parts[0]);
+            Integer mes = Integer.valueOf(parts[1]);
+            Integer dia = Integer.valueOf(parts[2]);
+
+            Evento evento = new Evento(nome, LocalDate.of(ano,mes,dia));
+
             repository.save(evento);
             model.addAttribute("message","O evento " + evento.getNome()+ " foi cadastrado com sucesso!");
         } catch (Exception e) {
@@ -40,14 +47,18 @@ public class EventoController {
             model.addAttribute("message","O evento" + nome + " é invalido!");
         }
 
-        return "execute";
+        return "/evento/cadastro";
     }
 
     @RequestMapping("/lista")
     public String listEventos(Model model){
 
-        model.addAttribute("eventos", repository.findAll());
+        List<Evento> eventos = repository.findAll();
 
-        return "lista";
+        System.out.println(eventos);
+
+        model.addAttribute("eventos", eventos);
+
+        return "/evento/lista";
     }
 }
