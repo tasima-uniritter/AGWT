@@ -28,4 +28,21 @@ public class ValidadorEvento {
                 throw new DataMenorOuIgualAHojeException();
         }
     }
+
+    public void ValidaPeriodoVendaIngressos(Evento evento) throws PeriodoVendaIngressosInvalidoException {
+        if(evento != null){
+            if(evento.getInicioVendas() != null && evento.getFinalVendas() != null &&
+                    evento.getInicioVendas().isAfter(evento.getFinalVendas())){
+                throw new PeriodoVendaIngressosInvalidoException("A data de início de venda deve ser inferior a data de fim.");
+            }
+        }
+    }
+
+    public void ValidaTipoIngressoDuplicado(Evento evento) {
+        if(evento != null){
+            //if(evento.getListaIngressoTipo() != null){
+            //     evento.getListaIngressoTipo()
+            //}
+        }
+    }
 }

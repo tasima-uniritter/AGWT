@@ -20,12 +20,6 @@ public class Ingresso {
     @Column(nullable = false)
     private Double valor;
 
-    @Column(nullable = false)
-    private LocalDate inicioVendas;
-
-    @Column(nullable = false)
-    private LocalDate finalVendas;
-
     public Ingresso(IngressoTipo tipo) {
         this.tipo = tipo;
         atribuiValorDosIngressos();
@@ -74,23 +68,5 @@ public class Ingresso {
 
     public Double getValor() { return valor; }
 
-    private void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public LocalDate getInicioVendas() {
-        return inicioVendas;
-    }
-
-    public void setInicioVendas(LocalDate inicioVendas) {
-        this.inicioVendas = inicioVendas;
-    }
-
-    public LocalDate getFinalVendas() {
-        return finalVendas;
-    }
-
-    public void setFinalVendas(LocalDate finalVendas) {
-        this.finalVendas = finalVendas;
-    }
+    private void setValor(Double valor) { this.valor = valor; }
 }
