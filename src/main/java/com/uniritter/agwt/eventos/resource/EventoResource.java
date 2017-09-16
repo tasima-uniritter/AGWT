@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/evento")
+@RequestMapping("/api/evento")
 public class EventoResource {
 
     @Autowired

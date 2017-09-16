@@ -1,10 +1,8 @@
 package com.uniritter.agwt.eventos.domain;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ALU201731064 on 01/09/2017.
@@ -22,6 +20,9 @@ public class Evento {
 
     @Column(nullable = false)
     private LocalDate dataDoEvento;
+
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+    private List<Ingresso> ingressos;
 
     public Evento(String nome, LocalDate dataDoEvento){
         setNome(nome);

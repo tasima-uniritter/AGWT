@@ -11,19 +11,19 @@ public class Ingresso {
     @Column
     private long codigo;
 
-    @Column
+    @Column(nullable = false)
     private IngressoTipo tipo;
 
-    @Column
+    @ManyToOne
     private Evento evento;
 
-    @Column
+    @Column(nullable = false)
     private Double valor;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate inicioVendas;
 
-    @Column
+    @Column(nullable = false)
     private LocalDate finalVendas;
 
     public Ingresso(IngressoTipo tipo) {

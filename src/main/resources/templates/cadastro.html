@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema de Eventos</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container" >
+			<div class="jumbotron" align="center" style="margin-top: 5px;"></div>
+			<div align="center" class="form-group">
+				<h3>Cadastro de Evento</h3>
+				<form class="form-inline" action="#" th:action="@{/cadastro/salva}" method="post" >
+				    <input class="form-control" type="text" id="nome" name="nome" placeholder="Digite um nome"/>
+				    <input class="form-control" type="date" id="data" name="data"/>
+				    <input type="submit" id="salva" name="salva" value="salva" class="btn btn-default"/>
+				</form>
+			</div>
+		</div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="bootstrap/js/bootstrap.min.js"></script>
+	
+	</body>
+</html>
