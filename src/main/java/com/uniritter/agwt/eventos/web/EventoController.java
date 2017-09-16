@@ -19,19 +19,13 @@ public class EventoController {
     @Autowired
     private EventoRepository repository;
 
-    @RequestMapping(value="/")
-    String home() {
-
-        return "index";
-    }
-
-    @RequestMapping(value="/cadastra")
+    @RequestMapping(value="/cadastro")
     String cadastra() {
 
         return "cadastro";
     }
 
-    @RequestMapping(value="/cadastra/salva", method= RequestMethod.POST)
+    @RequestMapping(value="/cadastro/salva", method= RequestMethod.POST)
     String salva(@RequestParam String nome, @RequestParam LocalDate data, Model model) {
 
         System.out.println(nome);
@@ -46,7 +40,7 @@ public class EventoController {
             model.addAttribute("message","O evento" + nome + " é invalido!");
         }
 
-        return "salva";
+        return "execute";
     }
 
     @RequestMapping("/lista")

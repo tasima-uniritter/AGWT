@@ -7,9 +7,13 @@
 </head>
 <body>
 	<div class="container">
-		<div class="jumbotron" align="center" style="margin-top: 5px;">
-			<h1>TASIMA <small>Metódos Ágeis - Deploy</small></h1>
-		</div>
+		<nav class="navbar navbar-default">
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/evento/cadastro">Cadastro de Eventos</a></li>
+				<li><a href="/evento/lista">Lista de Eventos</a></li>
+			</ul>
+		</nav>
 		<div align="center">
 		
 			<p class="lead" th:text="${message}">...</p>
@@ -21,6 +25,7 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/bootstrap-theme.min.css"></script>
 
 </body>
 </html>

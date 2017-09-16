@@ -8,9 +8,16 @@
 	<body>
 		<div class="container" >
 			<div class="jumbotron" align="center" style="margin-top: 5px;"></div>
+			<nav class="navbar navbar-default">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Home</a></li>
+					<li><a href="/evento/cadastro">Cadastro de Eventos</a></li>
+					<li><a href="/evento/lista">Lista de Eventos</a></li>
+				</ul>
+			</nav>
 			<div align="center" class="form-group">
 				<h3>Cadastro de Evento</h3>
-				<form class="form-inline" action="#" th:action="@{/cadastro/salva}" method="post" >
+				<form class="form-inline" action="#" th:action="@{/evento/cadastro/salva}" method="post" >
 				    <input class="form-control" type="text" id="nome" name="nome" placeholder="Digite um nome"/>
 				    <input class="form-control" type="date" id="data" name="data"/>
 				    <input type="submit" id="salva" name="salva" value="salva" class="btn btn-default"/>
@@ -20,6 +27,7 @@
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="bootstrap/js/bootstrap-theme.min.css"></script>
 	
 	</body>
 </html>
