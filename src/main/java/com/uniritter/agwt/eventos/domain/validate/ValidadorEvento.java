@@ -1,4 +1,7 @@
-package com.uniritter.agwt.eventos.domain;
+package com.uniritter.agwt.eventos.domain.validate;
+
+import com.uniritter.agwt.eventos.domain.Evento;
+import com.uniritter.agwt.eventos.domain.exception.*;
 
 import java.time.LocalDate;
 
@@ -40,8 +43,8 @@ public class ValidadorEvento {
 
     public void ValidaTipoIngressoDuplicado(Evento evento) {
         if(evento != null){
-            //if(evento.getListaIngressoTipo() != null){
-            //     evento.getListaIngressoTipo()
+            //if(evento.getListaIngressoTipoEnum() != null){
+            //     evento.getListaIngressoTipoEnum()
             //}
         }
     }

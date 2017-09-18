@@ -40,6 +40,9 @@
 						<th>#</th>
 						<th>Nome Evento</th>
 						<th>Data Evento</th>
+						<th>Data Inicio Vendas</th>
+						<th>Data Fim Vendas</th>
+						<th>Tipos Ingressos</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,6 +50,9 @@
 						<td scope="row" th:text="${evento.id}"></td>
 						<td th:text="${evento.nome}"></td>
 						<td th:text="${evento.dataDoEvento}"></td>
+						<td th:text="${evento.inicioVendas}"></td>
+						<td th:text="${evento.finalVendas}"></td>
+						<td th:text="${evento.listaIngressoTipoEnum}"></td>
 					</tr>
 				</tbody>
 			</table>

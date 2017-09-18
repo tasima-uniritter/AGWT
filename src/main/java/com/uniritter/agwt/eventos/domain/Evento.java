@@ -1,5 +1,7 @@
 package com.uniritter.agwt.eventos.domain;
 
+import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,8 +32,15 @@ public class Evento {
     @Column(nullable = false)
     private LocalDate finalVendas;
 
-    @Column(nullable = false)
-    private List<IngressoTipo> listaIngressoTipo;
+    @ElementCollection(fetch = FetchType.LAZY, targetClass = IngressoTipoEnum.class)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    @JoinTable(name = "evento_tipo")
+    private List<IngressoTipoEnum> listaIngressoTipoEnum;
+
+    public Evento() {
+
+    }
 
     public Evento(String nome, LocalDate dataDoEvento) {
         setNome(nome);
@@ -45,12 +54,12 @@ public class Evento {
         setFinalVendas(finalVendas);
     }
 
-    public Evento(String teste, LocalDate localDate, LocalDate now, LocalDate date, List<IngressoTipo> listaIngressoTipo){
+    public Evento(String nome, LocalDate dataDoEvento, LocalDate inicioVendas, LocalDate finalVendas, List<IngressoTipoEnum> listaIngressoTipoEnum){
         setNome(nome);
         setDataDoEvento(dataDoEvento);
         setInicioVendas(inicioVendas);
         setFinalVendas(finalVendas);
-        setListaIngressoTipo(listaIngressoTipo);
+        setListaIngressoTipoEnum(listaIngressoTipoEnum);
     }
 
     public long getId() {
@@ -89,12 +98,12 @@ public class Evento {
 
     public void setFinalVendas(LocalDate finalVendas) { this.finalVendas = finalVendas; }
 
-    public List<IngressoTipo> getListaIngressoTipo() {
-        return listaIngressoTipo;
+    public List<IngressoTipoEnum> getListaIngressoTipoEnum() {
+        return listaIngressoTipoEnum;
     }
 
-    public void setListaIngressoTipo(List<IngressoTipo> listaIngressoTipo) {
-        this.listaIngressoTipo = listaIngressoTipo;
+    public void setListaIngressoTipoEnum(List<IngressoTipoEnum> listaIngressoTipoEnum) {
+        this.listaIngressoTipoEnum = listaIngressoTipoEnum;
     }
 
     @Override
@@ -103,6 +112,10 @@ public class Evento {
                 "Id=" + Id +
                 ", nome='" + nome + '\'' +
                 ", dataDoEvento=" + dataDoEvento +
+                ", ingressos=" + ingressos +
+                ", inicioVendas=" + inicioVendas +
+                ", finalVendas=" + finalVendas +
+                ", listaIngressoTipoEnum=" + listaIngressoTipoEnum +
                 '}';
     }
 }

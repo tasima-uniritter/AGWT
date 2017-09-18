@@ -1,7 +1,8 @@
 package com.uniritter.agwt.eventos.domain;
 
+import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 public class Ingresso {
@@ -12,7 +13,7 @@ public class Ingresso {
     private long codigo;
 
     @Column(nullable = false)
-    private IngressoTipo tipo;
+    private IngressoTipoEnum tipo;
 
     @ManyToOne
     private Evento evento;
@@ -20,7 +21,7 @@ public class Ingresso {
     @Column(nullable = false)
     private Double valor;
 
-    public Ingresso(IngressoTipo tipo) {
+    public Ingresso(IngressoTipoEnum tipo) {
         this.tipo = tipo;
         atribuiValorDosIngressos();
     }
@@ -50,11 +51,11 @@ public class Ingresso {
         this.codigo = codigo;
     }
 
-    public IngressoTipo getTipo() {
+    public IngressoTipoEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(IngressoTipo tipo) {
+    public void setTipo(IngressoTipoEnum tipo) {
         this.tipo = tipo;
     }
 

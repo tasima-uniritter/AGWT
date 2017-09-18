@@ -2,7 +2,7 @@ package com.uniritter.agwt.eventos.web;
 
 import com.uniritter.agwt.eventos.domain.Evento;
 import com.uniritter.agwt.eventos.domain.Ingresso;
-import com.uniritter.agwt.eventos.domain.IngressoTipo;
+import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
 import com.uniritter.agwt.eventos.repository.EventoRepository;
 import com.uniritter.agwt.eventos.repository.IngressoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class IngressoController {
     @RequestMapping(value="/cadastro/salva", method= RequestMethod.POST)
     String salva(
                  @RequestParam String idEvento,
-                 @RequestParam IngressoTipo tipo,
+                 @RequestParam IngressoTipoEnum tipo,
                  @RequestParam String valor,
                  @RequestParam String inicioVendas,
                  @RequestParam String finalVendas,

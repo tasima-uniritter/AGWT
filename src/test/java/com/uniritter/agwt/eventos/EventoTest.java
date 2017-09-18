@@ -1,15 +1,15 @@
 package com.uniritter.agwt.eventos;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.uniritter.agwt.eventos.domain.*;
-import org.apache.tomcat.jni.Local;
+import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
+import com.uniritter.agwt.eventos.domain.exception.*;
+import com.uniritter.agwt.eventos.domain.validate.ValidadorEvento;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,12 +21,12 @@ public class EventoTest {
     private Evento evento;
     private ValidadorEvento validadorEvento;
     private boolean ocorreuErro;
-    private List<IngressoTipo> listaIngressoTipo;
+    private List<IngressoTipoEnum> listaIngressoTipoEnum;
 
     @Before
     public void iniciar() {
         validadorEvento = new ValidadorEvento();
-        listaIngressoTipo = new ArrayList<IngressoTipo>();
+        listaIngressoTipoEnum = new ArrayList<IngressoTipoEnum>();
     }
 
     @Test
@@ -174,41 +174,43 @@ public class EventoTest {
     */
     @Test
     public void criaEventoComTiposDeIngressoTest(){
-        listaIngressoTipo.add(IngressoTipo.VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA_VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA_VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA);
 
         evento = new Evento("Teste",
                 LocalDate.now().plusDays(10),
                 LocalDate.now(),
                 LocalDate.now(),
-                listaIngressoTipo);
+                listaIngressoTipoEnum);
 
-        List<IngressoTipo> listaValidacao = new ArrayList<>();
-        listaValidacao.add(IngressoTipo.VIP);
-        listaValidacao.add(IngressoTipo.PLATEIA_VIP);
-        listaValidacao.add(IngressoTipo.PLATEIA);
+        System.out.println(evento.toString());
 
-        Assert.assertTrue("Adicionou tipos de ingresso corretamente", listaValidacao.containsAll(listaIngressoTipo));
+        List<IngressoTipoEnum> listaValidacao = new ArrayList<>();
+        listaValidacao.add(IngressoTipoEnum.VIP);
+        listaValidacao.add(IngressoTipoEnum.PLATEIA_VIP);
+        listaValidacao.add(IngressoTipoEnum.PLATEIA);
+
+        Assert.assertTrue("Adicionou tipos de ingresso corretamente", listaValidacao.containsAll(listaIngressoTipoEnum));
     }
 
     @Test
     public void criaEventoComTiposDeIngressoErroTest(){
-        listaIngressoTipo.add(IngressoTipo.VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA_VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA_VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA);
 
         evento = new Evento("Teste",
                 LocalDate.now().plusDays(10),
                 LocalDate.now(),
                 LocalDate.now(),
-                listaIngressoTipo);
+                listaIngressoTipoEnum);
 
-        List<IngressoTipo> listaValidacao = new ArrayList<>();
-        listaValidacao.add(IngressoTipo.VIP);
-        listaValidacao.add(IngressoTipo.PLATEIA_VIP);
+        List<IngressoTipoEnum> listaValidacao = new ArrayList<>();
+        listaValidacao.add(IngressoTipoEnum.VIP);
+        listaValidacao.add(IngressoTipoEnum.PLATEIA_VIP);
 
-        Assert.assertFalse("Adicionou tipos de ingresso corretamente", listaValidacao.containsAll(listaIngressoTipo));
+        Assert.assertFalse("Adicionou tipos de ingresso corretamente", listaValidacao.containsAll(listaIngressoTipoEnum));
     }
 
     /*Critério 4
@@ -219,16 +221,16 @@ public class EventoTest {
 
     @Test
     public void criarEventoComTipoDeIngressoDuplicadoTest(){
-        listaIngressoTipo.add(IngressoTipo.VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA_VIP);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA);
-        listaIngressoTipo.add(IngressoTipo.PLATEIA);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA_VIP);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA);
+        listaIngressoTipoEnum.add(IngressoTipoEnum.PLATEIA);
 
         evento = new Evento("Teste",
                 LocalDate.now().plusDays(10),
                 LocalDate.now(),
                 LocalDate.now(),
-                listaIngressoTipo);
+                listaIngressoTipoEnum);
 
         validadorEvento.ValidaTipoIngressoDuplicado(evento);
     }
