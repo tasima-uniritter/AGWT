@@ -4,6 +4,8 @@ import com.uniritter.agwt.eventos.domain.Evento;
 import com.uniritter.agwt.eventos.domain.exception.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ValidadorEvento {
 
@@ -41,11 +43,15 @@ public class ValidadorEvento {
         }
     }
 
-    public void ValidaTipoIngressoDuplicado(Evento evento) {
+    public void ValidaTipoIngressoDuplicado(Evento evento) throws TipoIngressoDuplicadoException {
         if(evento != null){
-            //if(evento.getListaIngressoTipoEnum() != null){
-            //     evento.getListaIngressoTipoEnum()
-            //}
+            if(evento.getListaIngressoTipoEnum() != null){
+                Set<Enum> set = new HashSet<Enum>();
+                evento.getListaIngressoTipoEnum().stream().allMatch(o -> set.add(o));
+
+                if(set.size() != evento.getListaIngressoTipoEnum().size())
+                    throw new TipoIngressoDuplicadoException();
+            }
         }
     }
 }

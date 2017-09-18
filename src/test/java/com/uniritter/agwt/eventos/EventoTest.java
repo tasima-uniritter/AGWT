@@ -41,6 +41,16 @@ public class EventoTest {
         Assert.assertEquals(evento.getDataDoEvento(), LocalDate.now().plusDays(10));
     }
 
+    //US #1 - Criar eventos
+
+    /*
+    Critério 1
+    Dado que quero criar um evento
+    Quando  carregar o formulário
+    Então deve apresentar os seguintes campos:
+    *Nome
+    *Data do evento
+     */
 
     @Test
     public void criaEventoValidaCampoNomeObrigatoriosTest() throws DataDoEventoNaoInformadoException {
@@ -70,6 +80,15 @@ public class EventoTest {
         Assert.assertTrue(ocorreuErro);
     }
 
+    /*
+    Critério 2
+    Dado que quero criar um evento
+    Quando salvar o evento
+    Então os campos abaixo devem ser obrigatórios:
+    *Nome
+    *Data do evento
+     */
+
     @Test
     public void criaEventoCampoNomeMaiorQue150CaracteresTest(){
         evento = new Evento("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" +
@@ -87,6 +106,15 @@ public class EventoTest {
         Assert.assertTrue(ocorreuErro);
     }
 
+    /*
+    Critério 3
+    Dado que quero criar um evento
+    Quando informar um nome maior que
+    caracteres e salvar
+    Então não deve permitir salvar e informar a mensagem:
+    "O nome permite no máximo 150 caracteres"
+     */
+
     @Test
     public void criaEventoCampoDataIgualAHojeTest(){
         evento = new Evento("Teste", LocalDate.now());
@@ -100,6 +128,13 @@ public class EventoTest {
 
         Assert.assertTrue(ocorreuErro);
     }
+
+    /*Critério 4
+    Dado que quero criar um evento
+    Quando informar uma data inferior ao do dia atual e salvar
+    Então não deve permitir salvar e informar a mensagem:
+    "A data do evento deve ser igual ou maior que a de hoje"
+     */
 
     @Test
     public void criaEventoCampoDataMenorQueHojeTest() {
@@ -115,6 +150,14 @@ public class EventoTest {
         Assert.assertTrue(ocorreuErro);
     }
 
+    //US #3 - Disponibilizar Ingressos
+
+    /*Critério 1
+    Dado que pretendo disponibilizar venda online
+    Quando cadastrar o evento
+    Então quero definir um período de venda
+    */
+
     @Test
     public void criaEventoDefinindoPeriodoDeVendaTest(){
         evento = new Evento("Teste",
@@ -129,6 +172,13 @@ public class EventoTest {
         Assert.assertTrue("Foi definido o período", foiInformado);
 
     }
+
+    /*Critério 2
+    Dado que quero criar um evento
+    Quando informar data de início de venda posterior a data fim de venda do evento
+    Então sistema não deve permitir salvar e informa a mensagem:
+    "A data de início de venda deve ser inferior a data de fim"
+    */
 
     @Test
     public void criaEventoDataInicioMenorQueDataFimPeriodoTest(){
@@ -232,7 +282,15 @@ public class EventoTest {
                 LocalDate.now(),
                 listaIngressoTipoEnum);
 
-        validadorEvento.ValidaTipoIngressoDuplicado(evento);
+        ocorreuErro = false;
+
+        try {
+            validadorEvento.ValidaTipoIngressoDuplicado(evento);
+        } catch (TipoIngressoDuplicadoException e) {
+            ocorreuErro = true;
+        }
+
+        Assert.assertTrue("Não é possível criar um evento com o mesmo tipo de ingresso", ocorreuErro);
     }
 }
 
