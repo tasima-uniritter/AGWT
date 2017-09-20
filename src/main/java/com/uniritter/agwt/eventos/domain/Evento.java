@@ -43,23 +43,23 @@ public class Evento {
     }
 
     public Evento(String nome, LocalDate dataDoEvento) {
-        setNome(nome);
-        setDataDoEvento(dataDoEvento);
+        this.nome = nome;
+        this.dataDoEvento = dataDoEvento;
     }
 
     public Evento(String nome, LocalDate dataDoEvento, LocalDate inicioVendas, LocalDate finalVendas) {
-        setNome(nome);
-        setDataDoEvento(dataDoEvento);
-        setInicioVendas(inicioVendas);
-        setFinalVendas(finalVendas);
+        this.nome = nome;
+        this.dataDoEvento = dataDoEvento;
+        this.inicioVendas = inicioVendas;
+        this.finalVendas = finalVendas;
     }
 
     public Evento(String nome, LocalDate dataDoEvento, LocalDate inicioVendas, LocalDate finalVendas, List<IngressoTipoEnum> listaIngressoTipoEnum){
-        setNome(nome);
-        setDataDoEvento(dataDoEvento);
-        setInicioVendas(inicioVendas);
-        setFinalVendas(finalVendas);
-        setListaIngressoTipoEnum(listaIngressoTipoEnum);
+        this.nome = nome;
+        this.dataDoEvento = dataDoEvento;
+        this.inicioVendas = inicioVendas;
+        this.finalVendas = finalVendas;
+        this.listaIngressoTipoEnum = listaIngressoTipoEnum;
     }
 
     public long getId() {

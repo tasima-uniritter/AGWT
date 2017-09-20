@@ -3,7 +3,7 @@ package com.uniritter.agwt.eventos;
 import com.uniritter.agwt.eventos.domain.*;
 import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
 import com.uniritter.agwt.eventos.domain.exception.*;
-import com.uniritter.agwt.eventos.domain.validate.ValidadorEvento;
+import com.uniritter.agwt.eventos.domain.validate.EventoValidate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,13 +19,13 @@ import java.util.List;
 public class EventoTest {
 
     private Evento evento;
-    private ValidadorEvento validadorEvento;
+    private EventoValidate validadorEvento;
     private boolean ocorreuErro;
     private List<IngressoTipoEnum> listaIngressoTipoEnum;
 
     @Before
     public void iniciar() {
-        validadorEvento = new ValidadorEvento();
+        validadorEvento = new EventoValidate();
         listaIngressoTipoEnum = new ArrayList<IngressoTipoEnum>();
     }
 

@@ -7,7 +7,19 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ValidadorEvento {
+public class EventoValidate {
+
+
+    public boolean validate(Evento evento) throws DataDoEventoNaoInformadoException, NomeDoEventoNaoInformadoException, DataMenorOuIgualAHojeException, PeriodoVendaIngressosInvalidoException, NomePermiteMax150CaracteresException, TipoIngressoDuplicadoException {
+
+        this.CamposObrigatorios(evento);
+        this.ValidaCampoDataMenorIgualHoje(evento);
+        this.ValidaPeriodoVendaIngressos(evento);
+        this.ValidaTamanhoCampoNome(evento);
+        this.ValidaTipoIngressoDuplicado(evento);
+
+        return true;
+    }
 
     public void CamposObrigatorios(Evento evento) throws NomeDoEventoNaoInformadoException, DataDoEventoNaoInformadoException {
         if(evento != null){

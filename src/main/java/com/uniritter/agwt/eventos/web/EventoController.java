@@ -2,8 +2,9 @@ package com.uniritter.agwt.eventos.web;
 
 import com.uniritter.agwt.eventos.domain.Evento;
 import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
+import com.uniritter.agwt.eventos.domain.exception.*;
 import com.uniritter.agwt.eventos.dto.EventoDTO;
-import com.uniritter.agwt.eventos.repository.EventoRepository;
+import com.uniritter.agwt.eventos.service.EventoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import java.util.*;
 public class EventoController {
 
     @Autowired
-    private EventoRepository repository;
+    private EventoService service;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -35,7 +36,7 @@ public class EventoController {
         Evento evento = modelMapper.map(eventoDto, Evento.class);
 
         if (eventoDto.getId() > 0) {
-            Evento oldEvento = repository.findOne(eventoDto.getId());
+            Evento oldEvento = service.findOne(eventoDto.getId());
             evento.setNome(oldEvento.getNome());
             evento.setDataDoEvento(oldEvento.getDataDoEvento());
             evento.setInicioVendas(oldEvento.getInicioVendas());
@@ -56,7 +57,10 @@ public class EventoController {
     @RequestMapping(value="/cadastro", method= RequestMethod.POST)
     public String salva(@RequestParam Map<String,String> allRequestParams, Model model) {
 
+        String nome = allRequestParams.get("nome");
+
         try {
+
             String[] partsEvento = allRequestParams.get("dataDoEvento").split("-");
             LocalDate dtDoEvento = LocalDate.of(Integer.valueOf(partsEvento[0]),
                                                 Integer.valueOf(partsEvento[1]),
@@ -83,23 +87,35 @@ public class EventoController {
                 }
             }
 
-            Evento evento = new Evento( allRequestParams.get("nome"),
-                                        dtDoEvento,
-                                        dtInicio,
-                                        dtFim,
-                                        tiposForEvento);
+            Evento evento = new Evento(nome, dtDoEvento, dtInicio, dtFim, tiposForEvento);
 
-            repository.save(evento);
+            service.save(evento);
 
             model.addAttribute("message","O evento " + evento.getNome()+ " foi cadastrado com sucesso!");
         } catch (Exception e) {
-            System.out.println(new Date(System.currentTimeMillis())+ " INFO --- " + e.getMessage());
-            model.addAttribute("message","O evento" + allRequestParams.get("nome") + " é invalido!");
+            trataException(nome, model, e.getMessage());
+        } catch (DataDoEventoNaoInformadoException e) {
+            trataException(nome, model, e.getMessage());
+        } catch (NomePermiteMax150CaracteresException e) {
+            trataException(nome, model, e.getMessage());
+        } catch (PeriodoVendaIngressosInvalidoException e) {
+            trataException(nome, model, e.getMessage());
+        } catch (NomeDoEventoNaoInformadoException e) {
+            trataException(nome, model, e.getMessage());
+        } catch (TipoIngressoDuplicadoException e) {
+            trataException(nome, model, e.getMessage());
+        } catch (DataMenorOuIgualAHojeException e) {
+            trataException(nome, model, e.getMessage());
         }
 
         this.getTiposIngressos(model);
 
         return "/evento/cadastro";
+    }
+
+    private void trataException(String nome, Model model, String erro) {
+        System.out.println(new Date(System.currentTimeMillis())+ " INFO --- " + erro);
+        model.addAttribute("message", "O evento" + nome + " é invalido! Erro: "+ erro);
     }
 
     private void getTiposIngressos(Model model) {
@@ -110,7 +126,7 @@ public class EventoController {
     @RequestMapping("/lista")
     public String listEventos(Model model){
 
-        List<Evento> eventos = repository.findAll();
+        List<Evento> eventos = service.findAll();
 
         System.out.println(eventos);
 
