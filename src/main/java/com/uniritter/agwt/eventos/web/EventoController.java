@@ -50,6 +50,7 @@ public class EventoController {
     public String cadastra(Model model) {
 
         this.getTiposIngressos(model);
+        model.addAttribute("evento",new Evento());
 
         return "/evento/cadastro";
     }
@@ -57,6 +58,7 @@ public class EventoController {
     @RequestMapping(value="/cadastro", method= RequestMethod.POST)
     public String salva(@RequestParam Map<String,String> allRequestParams, Model model) {
 
+        Evento evento = new Evento();
         String nome = allRequestParams.get("nome");
 
         try {
@@ -87,35 +89,36 @@ public class EventoController {
                 }
             }
 
-            Evento evento = new Evento(nome, dtDoEvento, dtInicio, dtFim, tiposForEvento);
+            evento = new Evento(nome, dtDoEvento, dtInicio, dtFim, tiposForEvento);
 
             service.save(evento);
 
             model.addAttribute("message","O evento " + evento.getNome()+ " foi cadastrado com sucesso!");
-        } catch (Exception e) {
-            trataException(nome, model, e.getMessage());
         } catch (DataDoEventoNaoInformadoException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         } catch (NomePermiteMax150CaracteresException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         } catch (PeriodoVendaIngressosInvalidoException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         } catch (NomeDoEventoNaoInformadoException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         } catch (TipoIngressoDuplicadoException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         } catch (DataMenorOuIgualAHojeException e) {
-            trataException(nome, model, e.getMessage());
+            trataException(evento, model, e.getMessage());
         }
 
         this.getTiposIngressos(model);
+        model.addAttribute("evento",new Evento());
 
         return "/evento/cadastro";
     }
 
-    private void trataException(String nome, Model model, String erro) {
+    private void trataException(Evento evento, Model model, String erro) {
         System.out.println(new Date(System.currentTimeMillis())+ " INFO --- " + erro);
-        model.addAttribute("message", "O evento" + nome + " é invalido! Erro: "+ erro);
+        model.addAttribute("message", erro);
+        model.addAttribute("erro", "sim");
+        model.addAttribute("evento",evento);
     }
 
     private void getTiposIngressos(Model model) {

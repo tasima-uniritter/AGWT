@@ -33,7 +33,8 @@
 <!--Menu-->
 
 <div class="container-fluid">
-	<p class="lead" th:text="${message}"></p>
+
+	<div th:if="${message != null}" class="alert alert-primary" role="alert" th:text="${message}"></div>
 
 	<div class="container" >
 		<div class="form-group">
@@ -44,13 +45,13 @@
 					<div class="col">
 						<div class="form-group">
 							<label for="nome">Nome do evento</label>
-							<input class="form-control" type="text" id="nome" name="nome" placeholder="Digite um nome"/>
+							<input class="form-control" type="text" id="nome" name="nome" placeholder="Digite um nome" required="true" th:text="${evento.nome}"/>
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
 							<label for="dataDoEvento">Data do Evento</label>
-							<input class="form-control" type="date" id="dataDoEvento" name="dataDoEvento"/>
+							<input class="form-control" type="date" id="dataDoEvento" name="dataDoEvento" required="true"/>
 						</div>
 					</div>
 				</div>
@@ -71,13 +72,13 @@
 					<div class="col">
 						<div class="form-group">
 							<label for="inicioVendas">Data de início da venda dos ingressos:</label>
-							<input class="form-control" type="date" id="inicioVendas" name="inicioVendas"/>
+							<input class="form-control" type="date" id="inicioVendas" name="inicioVendas" required="true"/>
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
 							<label for="finalVendas">Data limite da venda dos ingressos:</label>
-							<input class="form-control" type="date" id="finalVendas" name="finalVendas"/>
+							<input class="form-control" type="date" id="finalVendas" name="finalVendas" required="true"/>
 						</div>
 					</div>
 				</div>
