@@ -5,6 +5,8 @@ import com.uniritter.agwt.eventos.domain.Ingresso;
 import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
 import com.uniritter.agwt.eventos.repository.EventoRepository;
 import com.uniritter.agwt.eventos.repository.IngressoRepository;
+import com.uniritter.agwt.eventos.service.EventoService;
+import com.uniritter.agwt.eventos.service.IngressoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,77 +15,67 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value="/ingresso")
 public class IngressoController {
 
     @Autowired
-    private IngressoRepository repository;
+    private IngressoService ingressoService;
 
     @Autowired
-    private EventoRepository repositoryEventos;
+    private EventoService eventoService;
 
-    @RequestMapping(value="/cadastro")
-    String cadastra(Model model) {
+    @RequestMapping
+    String principal(Model model) {
 
-        List<Evento> eventos = repositoryEventos.findAll();
+        this.getEventos(model);
+        this.getTiposIngressos(model);
+        this.getIngressos(model);
 
-        System.out.println(eventos);
-
-        model.addAttribute("eventos", eventos);
-
-        return "/ingresso/cadastro";
+        return "ingresso";
     }
 
-    @RequestMapping(value="/cadastro/salva", method= RequestMethod.POST)
-    String salva(
-                 @RequestParam String idEvento,
-                 @RequestParam IngressoTipoEnum tipo,
-                 @RequestParam String valor,
-                 @RequestParam String inicioVendas,
-                 @RequestParam String finalVendas,
-                 Model model) {
+    @RequestMapping(method= RequestMethod.POST)
+    String cadastrar(@RequestParam Map<String,String> allRequestParams, Model model) {
 
-        System.out.println(idEvento);
-        System.out.println(tipo);
-        System.out.println(valor);
-        System.out.println(inicioVendas);
-        System.out.println(finalVendas);
+        System.out.println(allRequestParams.toString());
 
         try {
-            String[] pI = inicioVendas.split("-");
-            LocalDate dataInicioVendas = LocalDate.of(Integer.valueOf(pI[0]),
-                    Integer.valueOf(pI[1]),Integer.valueOf(pI[2]));
 
-            String[] pF = finalVendas.split("-");
-            LocalDate dataFinalVendas = LocalDate.of(Integer.valueOf(pF[0]),
-                    Integer.valueOf(pF[1]),Integer.valueOf(pF[2]));
+            Ingresso ingresso = new Ingresso(IngressoTipoEnum.valueOf(allRequestParams.get("tipo")));
+            ingresso.setEvento(eventoService.findOne(Integer.valueOf(allRequestParams.get("evento"))));
 
-            //Ingresso ingresso = new Ingresso();
-
-
-            //repository.save(evento);
-            model.addAttribute("message","O ingresos  foi cadastrado com sucesso!");
+            ingressoService.save(ingresso);
+            model.addAttribute("message","O ingresso  foi cadastrado com sucesso!");
         } catch (Exception e) {
             System.out.println(new Date(System.currentTimeMillis())+ " INFO --- " + e.getMessage());
             model.addAttribute("message","O ingresso é invalido!");
         }
 
-        return "/ingresso/cadastro";
+        this.getEventos(model);
+        this.getTiposIngressos(model);
+        this.getIngressos(model);
+
+        return "ingresso";
     }
 
-    @RequestMapping("/lista")
-    public String listIngressos(Model model){
+    private void getTiposIngressos(Model model) {
+        List<IngressoTipoEnum> ingressoTipoEnum = Arrays.asList(IngressoTipoEnum.values());
+        model.addAttribute("tipos", ingressoTipoEnum);
+    }
 
-        List<Ingresso> ingressos = repository.findAll();
+    private void getEventos(Model model) {
+        List<Evento> eventos = eventoService.findAll();
+        model.addAttribute("eventos", eventos);
+    }
 
-        System.out.println(ingressos);
-
+    private void getIngressos(Model model) {
+        List<Ingresso> ingressos = ingressoService.findAll();
         model.addAttribute("ingressos", ingressos);
-
-        return "/ingresso/lista";
     }
 }

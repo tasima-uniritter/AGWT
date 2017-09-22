@@ -46,19 +46,22 @@ public class EventoController {
         return evento;
     }
 
-    @RequestMapping(value="/cadastro")
+    @RequestMapping
     public String cadastra(Model model) {
 
         this.getTiposIngressos(model);
-        model.addAttribute("evento",new Evento());
+        this.getEventos(model);
+        model.addAttribute("evento", new Evento());
 
-        return "/evento/cadastro";
+        return "evento";
     }
 
-    @RequestMapping(value="/cadastro", method= RequestMethod.POST)
+    @RequestMapping(method= RequestMethod.POST)
     public String salva(@RequestParam Map<String,String> allRequestParams, Model model) {
 
         Evento evento = new Evento();
+        model.addAttribute("evento",evento);
+
         String nome = allRequestParams.get("nome");
 
         try {
@@ -79,17 +82,17 @@ public class EventoController {
                                                 Integer.valueOf(partsFim[2]));
 
             // retorno do enun
-            List<IngressoTipoEnum> ingressoTipoEnums = Arrays.asList(IngressoTipoEnum.values());
-            List<IngressoTipoEnum> tiposForEvento = new ArrayList<IngressoTipoEnum>();
+            List<IngressoTipoEnum> tiposIngresos = Arrays.asList(IngressoTipoEnum.values());
+            List<IngressoTipoEnum> tiposIngressoEvento = new ArrayList<IngressoTipoEnum>();
 
-            for (IngressoTipoEnum tipo : ingressoTipoEnums) {
+            for (IngressoTipoEnum tipo : tiposIngresos) {
 
                 if(allRequestParams.containsKey(tipo.getNome())){
-                    tiposForEvento.add(tipo);
+                    tiposIngressoEvento.add(tipo);
                 }
             }
 
-            evento = new Evento(nome, dtDoEvento, dtInicio, dtFim, tiposForEvento);
+            evento = new Evento(nome, dtDoEvento, dtInicio, dtFim, tiposIngressoEvento);
 
             service.save(evento);
 
@@ -109,9 +112,9 @@ public class EventoController {
         }
 
         this.getTiposIngressos(model);
-        model.addAttribute("evento",new Evento());
+        this.getEventos(model);
 
-        return "/evento/cadastro";
+        return "evento";
     }
 
     private void trataException(Evento evento, Model model, String erro) {
@@ -126,15 +129,8 @@ public class EventoController {
         model.addAttribute("tipos", ingressoTipoEnum);
     }
 
-    @RequestMapping("/lista")
-    public String listEventos(Model model){
-
+    private void getEventos(Model model) {
         List<Evento> eventos = service.findAll();
-
-        System.out.println(eventos);
-
         model.addAttribute("eventos", eventos);
-
-        return "/evento/lista";
     }
 }

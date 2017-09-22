@@ -26,6 +26,10 @@ public class Ingresso {
         atribuiValorDosIngressos();
     }
 
+    public Ingresso(){
+
+    }
+
     private void atribuiValorDosIngressos(){
         switch (tipo){
             case VIP:
