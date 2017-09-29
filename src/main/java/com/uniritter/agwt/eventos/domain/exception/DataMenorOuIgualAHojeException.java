@@ -4,6 +4,6 @@ public class DataMenorOuIgualAHojeException extends Throwable {
 
     @Override
     public String getMessage() {
-        return "Data menor ou igual a hoje.";
+        return "A data do evento deve ser igual ou maior que a de hoje";
     }
 }

@@ -6,9 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Created by ALU201731064 on 01/09/2017.
- */
 @Entity
 public class Evento {
 
