@@ -1,6 +1,6 @@
 package com.uniritter.agwt.eventos.domain.exception;
 
-public class NomePermiteMax150CaracteresException extends Throwable {
+public class NomePermiteMax150CaracteresException extends Exception {
 
     @Override
     public String getMessage() {

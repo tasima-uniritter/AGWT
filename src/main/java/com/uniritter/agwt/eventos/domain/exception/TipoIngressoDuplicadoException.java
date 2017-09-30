@@ -1,6 +1,6 @@
 package com.uniritter.agwt.eventos.domain.exception;
 
-public class TipoIngressoDuplicadoException extends Throwable {
+public class TipoIngressoDuplicadoException extends Exception {
 
     @Override
     public String getMessage() {

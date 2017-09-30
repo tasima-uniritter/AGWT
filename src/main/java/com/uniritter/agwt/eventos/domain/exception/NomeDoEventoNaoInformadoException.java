@@ -1,6 +1,6 @@
 package com.uniritter.agwt.eventos.domain.exception;
 
-public class NomeDoEventoNaoInformadoException extends Throwable {
+public class NomeDoEventoNaoInformadoException extends Exception {
 
     @Override
     public String getMessage() {

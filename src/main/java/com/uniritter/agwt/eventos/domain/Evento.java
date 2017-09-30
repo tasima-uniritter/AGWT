@@ -12,7 +12,7 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private long Id;
+    private long id;
 
     @Column(length = 150, nullable = false)
     private String nome;
@@ -60,11 +60,11 @@ public class Evento {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getNome() {
@@ -106,7 +106,7 @@ public class Evento {
     @Override
     public String toString() {
         return "Evento{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", dataDoEvento=" + dataDoEvento +
                 ", ingressos=" + ingressos +

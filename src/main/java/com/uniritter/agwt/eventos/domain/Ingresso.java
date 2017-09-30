@@ -42,7 +42,7 @@ public class Ingresso {
                 setValor(Double.valueOf(500));
                 break;
             case PLATEIA:
-                setValor(valor = Double.valueOf(300));
+                setValor(Double.valueOf(300));
                 break;
         }
     }
