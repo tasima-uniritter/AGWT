@@ -3,9 +3,7 @@ package com.uniritter.agwt.eventos.web;
 import com.uniritter.agwt.eventos.domain.Evento;
 import com.uniritter.agwt.eventos.domain.enumeration.IngressoTipoEnum;
 import com.uniritter.agwt.eventos.domain.exception.*;
-import com.uniritter.agwt.eventos.dto.EventoDTO;
 import com.uniritter.agwt.eventos.service.EventoService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,28 +20,6 @@ public class EventoController {
 
     @Autowired
     private EventoService service;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    private EventoDTO convertToDto(Evento evento) {
-        EventoDTO eventoDto = modelMapper.map(evento, EventoDTO.class);
-        return eventoDto;
-    }
-
-    private Evento convertToEntity(EventoDTO eventoDto) throws ParseException {
-        Evento evento = modelMapper.map(eventoDto, Evento.class);
-
-        if (eventoDto.getId() > 0) {
-            Evento oldEvento = service.findOne(eventoDto.getId());
-            evento.setNome(oldEvento.getNome());
-            evento.setDataDoEvento(oldEvento.getDataDoEvento());
-            evento.setInicioVendas(oldEvento.getInicioVendas());
-            evento.setFinalVendas(oldEvento.getFinalVendas());
-            evento.setListaIngressoTipoEnum(oldEvento.getListaIngressoTipoEnum());
-        }
-        return evento;
-    }
 
     @RequestMapping
     public String cadastra(Model model) {
