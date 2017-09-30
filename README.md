@@ -1,6 +1,12 @@
 # AGWT
 Trabalho de introdução em desenvolvimento ágil - (Alex, Gelson, Tiago e Wagner)
 
+### TravisCI
+[![Build Status](https://travis-ci.org/tasima-uniritter/AGWT.svg?branch=master)](https://travis-ci.org/tasima-uniritter/AGWT)
+
+### Sonarcloud.io
+[![Quality Gate](http://sonarcloud.io/api/badges/gate?key=tasima-uniritter:AGWT)](http://sonarcloud.io/dashboard/index/tasima-uniritter:AGWT)
+
 <h2>Tecnologias utilizadas:</h2>
 
 <h4>Java 8 - https://www.java.com/pt_BR/download/faq/java8.xml</h4>
