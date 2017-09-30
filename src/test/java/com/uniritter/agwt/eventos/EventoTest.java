@@ -93,7 +93,7 @@ public class EventoTest {
     }
 
     @Test
-    public void salvaEventoSemDataEvento() throws NomeDoEventoNaoInformadoException {
+    public void salvaEventoSemDataEvento() {
         Boolean erroData = false;
 
         Evento evento = new Evento();
@@ -136,8 +136,6 @@ public class EventoTest {
 
         } catch (DataDoEventoNaoInformadoException e) {
         } catch (NomePermiteMax150CaracteresException e) {
-
-
             Assert.assertTrue((e.getMessage() == "O nome permite no máximo 150 caracteres"));
         } catch (PeriodoVendaIngressosInvalidoException e) {
         } catch (NomeDoEventoNaoInformadoException e) {
@@ -192,7 +190,7 @@ public class EventoTest {
         evento.setInicioVendas(LocalDate.now());
         evento.setFinalVendas(LocalDate.now());
 
-        Evento eventoSalvo = new Evento();;
+        Evento eventoSalvo = new Evento();
         try {
             eventoSalvo = service.save(evento);
         } catch (NomeDoEventoNaoInformadoException e) {
@@ -211,24 +209,33 @@ public class EventoTest {
 
     }
 
-    /*Critério 2
-    Dado que quero criar um evento
-    Quando informar data de início de venda posterior a data fim de venda do evento
-    Então sistema não deve permitir salvar e informa a mensagem:
-    "A data de início de venda deve ser inferior a data de fim"
-    */
-
+    /**
+     * Critério 2
+     *
+     * Dado que quero criar um evento
+     * Quando informar data de início de venda posterior a data fim de venda do evento
+     * Então sistema não deve permitir salvar e informa a mensagem:
+     * "A data de início de venda deve ser inferior a data de fim"
+     */
     @Test
     public void criaEventoDataInicioMenorQueDataFimPeriodoTest(){
-        evento = new Evento("Teste",
-                LocalDate.now().plusDays(10),
-                LocalDate.now().plusDays(1),
-                LocalDate.now());
 
-        ocorreuErro = false;
+        Evento evento = new Evento();
+
+        evento.setNome("Teste");
+        evento.setDataDoEvento(LocalDate.now().plusDays(10));
+        evento.setInicioVendas(LocalDate.now().plusDays(1));
+        evento.setFinalVendas(LocalDate.now());
 
         try {
-            validadorEvento.ValidaPeriodoVendaIngressos(evento);
+            service.save(evento);
+
+            ocorreuErro = false;
+        } catch (NomeDoEventoNaoInformadoException e) {
+        } catch (DataDoEventoNaoInformadoException e) {
+        } catch (DataMenorOuIgualAHojeException e) {
+        } catch (NomePermiteMax150CaracteresException e) {
+        } catch (TipoIngressoDuplicadoException e) {
         } catch (PeriodoVendaIngressosInvalidoException e) {
             ocorreuErro = true;
         }
@@ -254,12 +261,13 @@ public class EventoTest {
         Assert.assertFalse("Validou o periodo de venda de ingressos", ocorreuErro);
     }
 
-    /*
-    Critério 3
-    Dado que quero vincular os tipos de ingressos existentes ao evento
-    Quando cadastrar o evento
-    Então quero definir quais tipos de ingressos estarão disponíveis
-    */
+    /**
+     * Critério 3
+     *
+     * Dado que quero vincular os tipos de ingressos existentes ao evento
+     * Quando cadastrar o evento
+     * Então quero definir quais tipos de ingressos estarão disponíveis
+     */
     @Test
     public void criaEventoComTiposDeIngressoTest(){
         listaIngressoTipoEnum.add(IngressoTipoEnum.VIP);

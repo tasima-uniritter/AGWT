@@ -2,7 +2,7 @@ package com.uniritter.agwt.eventos.domain.enumeration;
 
 public enum IngressoTipoEnum {
 
-    VIP ("VIP", Double.valueOf(1000) ),
+    VIP ("VIP", Double.valueOf(1000)),
     BACKSTAGE ("BACKSTAGE", Double.valueOf(800)),
     PLATEIA_VIP ("PLATEIA VIP", Double.valueOf(500)),
     PLATEIA ("PLATEIA", Double.valueOf(300));

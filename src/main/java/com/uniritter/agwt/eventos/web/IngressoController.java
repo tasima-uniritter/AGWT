@@ -43,8 +43,6 @@ public class IngressoController {
     @RequestMapping(method= RequestMethod.POST)
     String cadastrar(@RequestParam Map<String,String> allRequestParams, Model model) {
 
-        System.out.println(allRequestParams.toString());
-
         try {
 
             Ingresso ingresso = new Ingresso(IngressoTipoEnum.valueOf(allRequestParams.get("tipo")));

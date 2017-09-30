@@ -6,3 +6,12 @@ jdk:
 before_install:
 
 - chmod +x mvnw
+
+addons:
+  sonarcloud:
+    organization: "tasima-uniritter-github"
+    #token:
+    #  secure: ********* # encrypted value of your token
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
